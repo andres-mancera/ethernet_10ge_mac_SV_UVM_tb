@@ -13,10 +13,25 @@ class packet_sequence extends uvm_sequence #(packet);
     `uvm_info( get_name(), $sformatf("Hierarchy: %m"), UVM_HIGH )
   endfunction : new
 
+
   virtual task body();
-    `uvm_do(req);
+    repeat(5) begin
+      `uvm_do(req);
+    end
   endtask : body
+
+
+  virtual task pre_start();
+    if ( starting_phase != null )
+      starting_phase.raise_objection( this );
+  endtask : pre_start
+
+
+  virtual task post_start();
+    if  ( starting_phase != null )
+      starting_phase.drop_objection( this );
+  endtask : post_start
 
 endclass : packet_sequence
 
-`endif // PACKET_SEQUENCE__SV
+`endif  // PACKET_SEQUENCE__SV

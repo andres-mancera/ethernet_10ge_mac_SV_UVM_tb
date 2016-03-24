@@ -1,0 +1,26 @@
+# Waveforms
+*.vpd
+*.vcd
+*.evcd
+
+# Binary files
+simv
+
+# Directories used for compilation
+csrc/
+simv.daidir/
+
+# Log files
+*.log
+
+# DVE, UCLI related files
+DVEfiles/
+ucli*
+*.key
+
+# DirectC design compilation
+vc_hdrs.h
+
+# Editor backup files
+*.swp
+*~

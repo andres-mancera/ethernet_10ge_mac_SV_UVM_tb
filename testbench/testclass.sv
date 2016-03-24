@@ -9,6 +9,7 @@ class test_base extends uvm_test;
 
   env               m_env;
   packet_sequence   m_seq;
+  packet            m_pkt;
 
   `uvm_component_utils( test_base );
 
@@ -41,8 +42,13 @@ class test_base extends uvm_test;
 
 
   virtual task run_phase(input uvm_phase phase);
-    `uvm_info(get_name(), "Inside run_phase()", UVM_HIGH);
+    `uvm_info(get_name(), $sformatf("%m"), UVM_HIGH);
     m_seq = packet_sequence::type_id::create("m_seq", this);
+
+    m_pkt = new();
+    assert( m_pkt.randomize() );
+    `uvm_info(get_name(), $psprintf("Packet Content: \n%0s", m_pkt.sprint()), UVM_HIGH);
+
   endtask : run_phase
 
 

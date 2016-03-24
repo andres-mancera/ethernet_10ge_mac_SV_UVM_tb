@@ -42,6 +42,17 @@ class packet extends uvm_sequence_item;
   endfunction : new
 
   // FIXME: Decide if adding get/set methods is worth.
+  constraint C_bringup {
+    payload.size()  inside {[45:54]};
+    mac_dst_addr    == 48'hAABB_CCDD_EEFF;
+    mac_src_addr    == 48'h1122_3344_5566;
+    ether_type      == 16'h0800;
+    foreach( payload[j] )
+      {
+        payload[j]  == j+1;
+      }
+    ipg             == 10;
+  }
 
 endclass : packet
 

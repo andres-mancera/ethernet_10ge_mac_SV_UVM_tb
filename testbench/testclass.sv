@@ -9,7 +9,6 @@ class test_base extends uvm_test;
 
   env               m_env;
   packet_sequence   m_seq;
-  packet            m_pkt;
 
   `uvm_component_utils( test_base );
 
@@ -24,7 +23,6 @@ class test_base extends uvm_test;
     // ==== Assign virtual interface ================================
     // FIXME
   endfunction : build_phase
-
 
 
   virtual function void end_of_elaboration_phase(input uvm_phase phase);
@@ -44,13 +42,13 @@ class test_base extends uvm_test;
   virtual task run_phase(input uvm_phase phase);
     `uvm_info(get_name(), $sformatf("%m"), UVM_HIGH);
     m_seq = packet_sequence::type_id::create("m_seq", this);
-
-    m_pkt = new();
-    assert( m_pkt.randomize() );
-    `uvm_info(get_name(), $psprintf("Packet Content: \n%0s", m_pkt.sprint()), UVM_HIGH);
-
   endtask : run_phase
 
+
+  virtual task main_phase(input uvm_phase phase);
+    super.main_phase(phase);
+    m_seq.start( m_env.pkt_tx_agent.pkt_tx_seqr );
+  endtask : main_phase
 
 //  virtual task main_phase( input uvm_phase phase);
 //    uvm_objection   objection;

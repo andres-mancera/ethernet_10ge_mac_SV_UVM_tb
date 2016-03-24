@@ -1,0 +1,1 @@
+vcs -full64 -R -sverilog -l vcs.log -ntb_opts uvm-1.1 testcase.sv +UVM_TESTNAME=test_base

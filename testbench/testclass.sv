@@ -22,6 +22,10 @@ class test_base extends uvm_test;
     m_env = env::type_id::create("m_env", this);
     // ==== Assign virtual interface ================================
     // FIXME
+
+    // ==== Implicitly run sequences on the corresponding sequencers
+    uvm_config_db #(uvm_object_wrapper)::set(this, "m_env.pkt_tx_agent.pkt_tx_seqr.main_phase", "default_sequence", packet_sequence::get_type() );
+
   endfunction : build_phase
 
 
@@ -45,11 +49,6 @@ class test_base extends uvm_test;
   endtask : run_phase
 
 
-  virtual task main_phase(input uvm_phase phase);
-    super.main_phase(phase);
-    m_seq.start( m_env.pkt_tx_agent.pkt_tx_seqr );
-  endtask : main_phase
-
 //  virtual task main_phase( input uvm_phase phase);
 //    uvm_objection   objection;
 //    super.main_phase(phase);
@@ -59,5 +58,4 @@ class test_base extends uvm_test;
 
 endclass : test_base
 
-`endif // TESTCLASS__SV
-
+`endif  // TESTCLASS__SV

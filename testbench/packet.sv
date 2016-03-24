@@ -1,5 +1,5 @@
-`ifndef PACKET_SV
-`define PACKET_SV
+`ifndef PACKET__SV
+`define PACKET__SV
 
 
 class packet extends uvm_sequence_item;
@@ -45,4 +45,4 @@ class packet extends uvm_sequence_item;
 
 endclass : packet
 
-`endif // PACKET_SV
+`endif // PACKET__SV

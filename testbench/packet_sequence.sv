@@ -1,5 +1,5 @@
-`ifndef PACKET_SEQUENCE_SV
-`define PACKET_SEQUENCE_SV
+`ifndef PACKET_SEQUENCE__SV
+`define PACKET_SEQUENCE__SV
 
 `include "packet.sv"
 
@@ -19,4 +19,4 @@ class packet_sequence extends uvm_sequence #(packet);
 
 endclass : packet_sequence
 
-`endif // PACKET_SEQUENCE_SV
+`endif // PACKET_SEQUENCE__SV

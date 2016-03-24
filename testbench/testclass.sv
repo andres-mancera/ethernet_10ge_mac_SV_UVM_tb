@@ -1,8 +1,14 @@
 `ifndef TESTCLASS__SV
 `define TESTCLASS__SV
 
+`include "packet_sequence.sv"
+`include "env.sv"
+
 
 class test_base extends uvm_test;
+
+  env               m_env;
+  packet_sequence   m_seq;
 
   `uvm_component_utils( test_base );
 
@@ -13,7 +19,7 @@ class test_base extends uvm_test;
 
   virtual function void build_phase(input uvm_phase phase);
     super.build_phase(phase);
-
+    m_env = env::type_id::create("m_env", this);
     // ==== Assign virtual interface ================================
     // FIXME
   endfunction : build_phase
@@ -36,6 +42,7 @@ class test_base extends uvm_test;
 
   virtual task run_phase(input uvm_phase phase);
     `uvm_info(get_name(), "Inside run_phase()", UVM_HIGH);
+    m_seq = packet_sequence::type_id::create("m_seq", this);
   endtask : run_phase
 
 

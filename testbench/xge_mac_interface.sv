@@ -46,4 +46,12 @@ interface xge_mac_interface( input  clk_156m25,
                         input   xgmii_rxd
                     );
 
+  // Configure the DUT in loopback mode
+  // input 'xgmii_rxc' connected to output 'xgmii_txc'
+  // input 'xgmii_rxd' connected to output 'xgmii_txd'
+  initial begin
+    assign  xgmii_rxc = xgmii_txc;
+    assign  xgmii_rxd = xgmii_txd;
+  end
+
 endinterface : xge_mac_interface

@@ -21,11 +21,16 @@ class test_base extends uvm_test;
     super.build_phase(phase);
     m_env = env::type_id::create("m_env", this);
     // ==== Assign virtual interface ================================
-    // FIXME
+    uvm_config_db #(virtual xge_mac_interface)::set(this, "m_env.pkt_tx_agent.pkt_tx_drv", "drv_vi", xge_test_top.xge_mac_if);
+    // ==============================================================
 
-    // ==== Implicitly run sequences on the corresponding sequencers
+    // ==== Run the sequence on the sequencer using uvm_config_db ===
     uvm_config_db #(uvm_object_wrapper)::set(this, "m_env.pkt_tx_agent.pkt_tx_seqr.main_phase", "default_sequence", packet_sequence::get_type() );
+    // ==============================================================
 
+    // ==== Set the number of packets in the sequence ===============
+    uvm_config_db #(int unsigned)::set(this, "m_env.pkt_tx_agent.pkt_tx_seqr.packet_sequence", "num_packets", 5 );
+    // ==============================================================
   endfunction : build_phase
 
 

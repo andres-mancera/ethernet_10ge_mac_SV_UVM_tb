@@ -6,6 +6,8 @@
 
 class packet_sequence extends uvm_sequence #(packet);
 
+  int unsigned  num_packets = 5;
+
   `uvm_object_utils(packet_sequence)
 
   function new(input string name="packet_sequence");
@@ -15,7 +17,7 @@ class packet_sequence extends uvm_sequence #(packet);
 
 
   virtual task body();
-    repeat(5) begin
+    repeat (num_packets) begin
       `uvm_do(req);
     end
   endtask : body

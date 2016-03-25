@@ -26,6 +26,7 @@ class packet_sequence extends uvm_sequence #(packet);
   virtual task pre_start();
     if ( starting_phase != null )
       starting_phase.raise_objection( this );
+    uvm_config_db #(int unsigned)::get(null, get_full_name(), "num_packets", num_packets);
   endtask : pre_start
 
 

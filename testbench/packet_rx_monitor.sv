@@ -27,6 +27,8 @@ class packet_rx_monitor extends uvm_monitor #(packet);
     packet  rcv_pkt;
 
     `uvm_info( get_name(), $sformatf("HIERARCHY: %m"), UVM_HIGH);
+    // Initial assignment for pkt_rx interface signals.
+    mon_vi.pkt_rx_ren   <= 1'b0;
     // FIXME: Add all the code to collect transactions.
 
   endtask : run_phase

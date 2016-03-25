@@ -28,14 +28,14 @@ class packet_tx_driver extends uvm_driver #(packet);
     bit [63:0]      tx_data;
 
     `uvm_info( get_name(), $sformatf("HIERARCHY: %m"), UVM_HIGH);
-    forever begin
-      // Initial assignment for pkt_tx interface signals
-      drv_vi.pkt_tx_val     <= 1'b0;
-      drv_vi.pkt_tx_sop     <= $urandom_range(1,0);
-      drv_vi.pkt_tx_eop     <= $urandom_range(1,0);
-      drv_vi.pkt_tx_mod     <= $urandom_range(7,0);
-      drv_vi.pkt_tx_data    <= { $urandom, $urandom_range(65535,0) };
+    // Initial assignment for pkt_tx interface signals
+    drv_vi.pkt_tx_val   <= 1'b0;
+    drv_vi.pkt_tx_sop   <= $urandom_range(1,0);
+    drv_vi.pkt_tx_eop   <= $urandom_range(1,0);
+    drv_vi.pkt_tx_mod   <= $urandom_range(7,0);
+    drv_vi.pkt_tx_data  <= { $urandom, $urandom_range(65535,0) };
 
+    forever begin
       // FIXME: Remove after reset sequence is added.
       repeat (20) begin
         @(drv_vi.clk_156m25);

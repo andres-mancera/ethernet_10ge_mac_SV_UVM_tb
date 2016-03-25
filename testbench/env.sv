@@ -2,11 +2,12 @@
 `define ENV__SV
 
 `include "packet_tx_agent.sv"
-
+`include "packet_rx_agent.sv"
 
 class env extends uvm_env;
 
   packet_tx_agent   pkt_tx_agent;
+  packet_rx_agent   pkt_rx_agent;
 
   `uvm_component_utils(env)
 
@@ -18,6 +19,7 @@ class env extends uvm_env;
   virtual function void build_phase( input uvm_phase phase );
     super.build_phase( phase );
     pkt_tx_agent = packet_tx_agent::type_id::create( "pkt_tx_agent", this );
+    pkt_rx_agent = packet_rx_agent::type_id::create( "pkt_rx_agent", this );
   endfunction : build_phase
 
 endclass : env

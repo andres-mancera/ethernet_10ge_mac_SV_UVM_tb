@@ -29,6 +29,18 @@ class packet_tx_driver extends uvm_driver #(packet);
 
     `uvm_info( get_name(), $sformatf("HIERARCHY: %m"), UVM_HIGH);
     forever begin
+      // Initial assignment for pkt_tx interface signals
+      drv_vi.pkt_tx_val     <= 1'b0;
+      drv_vi.pkt_tx_sop     <= $urandom_range(1,0);
+      drv_vi.pkt_tx_eop     <= $urandom_range(1,0);
+      drv_vi.pkt_tx_mod     <= $urandom_range(7,0);
+      drv_vi.pkt_tx_data    <= { $urandom, $urandom_range(65535,0) };
+
+      // FIXME: Remove after reset sequence is added.
+      repeat (20) begin
+        @(drv_vi.clk_156m25);
+       end
+
       seq_item_port.get_next_item(req);
       `uvm_info( get_name(), $psprintf("Packet: \n%0s", req.sprint()), UVM_HIGH)
       pkt_len_in_bytes    = 6 + 6 + 2 + req.payload.size(); 
@@ -98,7 +110,7 @@ class packet_tx_driver extends uvm_driver #(packet);
         drv_vi.pkt_tx_sop       <= 1'b0;    //FIXME: Can be random
         drv_vi.pkt_tx_eop       <= 1'b0;    //FIXME: Can be random
         drv_vi.pkt_tx_mod       <= $urandom_range(7,0);
-        drv_vi.pkt_tx_data      <= { $urandom, $urandom_range(0,65535) };
+        drv_vi.pkt_tx_data      <= { $urandom, $urandom_range(65535,0) };
       end
       while ( drv_vi.pkt_tx_full ) begin
         // When the pkt_tx_full signal is asserted, transfers should

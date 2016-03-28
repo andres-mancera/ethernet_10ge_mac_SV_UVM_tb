@@ -132,6 +132,10 @@ class scoreboard extends uvm_scoreboard;
     super.report_phase( phase );
     `uvm_info( get_name( ), $sformatf( "REPORT: Packet Matches   =%0d", m_matches ), UVM_LOW )
     `uvm_info( get_name( ), $sformatf( "REPORT: Packet Mismatches=%0d", m_mismatches), UVM_LOW )
+    if ( m_mismatches )
+      `uvm_error( get_name(), "********** TEST FAILED **********" )
+    else
+      `uvm_info ( get_name(), "********** TEST PASSED **********", UVM_NONE )
   endfunction : report_phase
 
 endclass : scoreboard

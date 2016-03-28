@@ -1,6 +1,7 @@
 `ifndef ENV__SV
 `define ENV__SV
 
+`include "reset_agent.sv"
 `include "packet_tx_agent.sv"
 `include "packet_rx_agent.sv"
 `include "scoreboard.sv"
@@ -8,6 +9,7 @@
 
 class env extends uvm_env;
 
+  reset_agent       rst_agent;
   packet_tx_agent   pkt_tx_agent;
   packet_rx_agent   pkt_rx_agent;
   scoreboard        scbd;
@@ -21,6 +23,7 @@ class env extends uvm_env;
 
   virtual function void build_phase( input uvm_phase phase );
     super.build_phase( phase );
+    rst_agent    = reset_agent::type_id::create( "rst_agent", this );
     pkt_tx_agent = packet_tx_agent::type_id::create( "pkt_tx_agent", this );
     pkt_rx_agent = packet_rx_agent::type_id::create( "pkt_rx_agent", this );
     scbd         = scoreboard::type_id::create( "scbd", this );

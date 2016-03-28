@@ -38,11 +38,6 @@ class packet_tx_driver extends uvm_driver #(packet);
     drv_vi.drv_cb.pkt_tx_data   <= { $urandom, $urandom_range(65535,0) };
 
     forever begin
-      // FIXME: Remove after reset sequence is added.
-      repeat (20) begin
-        @(drv_vi.drv_cb);
-      end
-
       seq_item_port.get_next_item(req);
       `uvm_info( get_name(), $psprintf("Packet: \n%0s", req.sprint()), UVM_HIGH)
       pkt_len_in_bytes    = 6 + 6 + 2 + req.payload.size(); 

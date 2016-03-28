@@ -7,8 +7,9 @@ typedef uvm_sequencer #(packet) packet_tx_sequencer;
 
 class packet_tx_agent extends uvm_agent;
 
-  packet_tx_sequencer   pkt_tx_seqr;
-  packet_tx_driver      pkt_tx_drv;
+  packet_tx_sequencer           pkt_tx_seqr;
+  packet_tx_driver              pkt_tx_drv;
+  uvm_analysis_port #(packet)   ap_tx_agent;
 
   `uvm_component_utils( packet_tx_agent )
 
@@ -21,12 +22,14 @@ class packet_tx_agent extends uvm_agent;
     super.build_phase( phase );
     pkt_tx_seqr = packet_tx_sequencer::type_id::create( "pkt_tx_seqr", this );
     pkt_tx_drv  = packet_tx_driver::type_id::create( "pkt_tx_drv", this );
+    ap_tx_agent = new ( "ap_tx_agent", this );
   endfunction : build_phase
 
 
   virtual function void connect_phase( input uvm_phase phase );
     super.connect_phase( phase );
     pkt_tx_drv.seq_item_port.connect( pkt_tx_seqr.seq_item_export );
+    this.ap_tx_agent = pkt_tx_drv.ap_tx_drv;    //FIXME: Connect to the monitor.
   endfunction : connect_phase
 
 endclass : packet_tx_agent

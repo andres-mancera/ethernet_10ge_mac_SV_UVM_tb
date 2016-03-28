@@ -46,8 +46,10 @@ class scoreboard extends uvm_scoreboard;
 
 
   virtual task check_packet( );
-    check_packet_event.wait_trigger( );
-    check_packet_queues( );
+    forever begin
+      check_packet_event.wait_trigger( );
+      check_packet_queues( );
+    end
   endtask : check_packet
 
 

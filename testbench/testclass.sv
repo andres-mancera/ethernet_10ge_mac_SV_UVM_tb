@@ -30,7 +30,7 @@ class test_base extends uvm_test;
     // ==============================================================
 
     // ==== Set the number of packets in the sequence ===============
-    uvm_config_db #(int unsigned)::set(this, "m_env.pkt_tx_agent.pkt_tx_seqr.packet_sequence", "num_packets", 5 );
+    uvm_config_db #(int unsigned)::set(this, "m_env.pkt_tx_agent.pkt_tx_seqr.packet_sequence", "num_packets", 1 );
     // ==============================================================
   endfunction : build_phase
 
@@ -55,12 +55,12 @@ class test_base extends uvm_test;
   endtask : run_phase
 
 
-//  virtual task main_phase( input uvm_phase phase);
-//    uvm_objection   objection;
-//    super.main_phase(phase);
-//    objection = phase.get_objection();
-//    objection.set_drain_time(this, 50us);   //FIXME: Fine-tune this number
-//  endtask : main_phase
+  virtual task main_phase( input uvm_phase phase);
+    uvm_objection   objection;
+    super.main_phase(phase);
+    objection = phase.get_objection();
+    objection.set_drain_time(this, 1us);   //FIXME: Fine-tune this number
+  endtask : main_phase
 
 endclass : test_base
 

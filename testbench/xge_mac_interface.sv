@@ -1,11 +1,11 @@
-interface xge_mac_interface( input  clk_156m25,
-                             input  clk_xgmii_rx,
-                             input  clk_xgmii_tx,
-                             input  wb_clk_i,
-                             input  reset_156m25_n,
-                             input  reset_xgmii_rx_n,
-                             input  reset_xgmii_tx_n,
-                             input  wb_rst_i          );
+interface xge_mac_interface( input bit  clk_156m25,
+                             input bit  clk_xgmii_rx,
+                             input bit  clk_xgmii_tx,
+                             input bit  wb_clk_i,
+                             ref logic  reset_156m25_n,
+                             ref logic  reset_xgmii_rx_n,
+                             ref logic  reset_xgmii_tx_n,
+                             ref logic  wb_rst_i        );
 
   logic         pkt_rx_ren, pkt_tx_eop, pkt_tx_sop, pkt_tx_val;
   logic         wb_cyc_i, wb_stb_i, wb_we_i, wb_ack_o, wb_int_o;

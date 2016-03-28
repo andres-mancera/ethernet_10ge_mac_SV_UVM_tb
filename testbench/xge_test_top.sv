@@ -37,19 +37,6 @@ module xge_test_top();
     end
   end
 
-  // Generate the reset signals //FIXME: Add reset agent
-  initial begin
-    reset_156m25_n      = 1'b0;
-    reset_xgmii_rx_n    = 1'b0;
-    reset_xgmii_tx_n    = 1'b0;
-    wb_rst_i            = 1'b1;
-    #20000;
-    reset_156m25_n      <= 1'b1;
-    reset_xgmii_rx_n    <= 1'b1;
-    reset_xgmii_tx_n    <= 1'b1;
-    wb_rst_i            <= 1'b0;
-  end
-
   // Instantiate xge_mac_interface
   xge_mac_interface     xge_mac_if  (
                                         .clk_156m25         (clk_156m25),

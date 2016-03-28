@@ -16,6 +16,72 @@ interface xge_mac_interface( input  clk_156m25,
   logic [2:0]   pkt_tx_mod, pkt_rx_mod;
 
   //FIXME: Check clocking block integration
+  parameter INPUT_SKEW  = 1;
+  parameter OUTPUT_SKEW = 1;
+
+  clocking drv_cb @(posedge clk_156m25);
+    default input   #INPUT_SKEW;
+    default output  #OUTPUT_SKEW;
+    input   pkt_rx_avail;
+    input   pkt_rx_data;
+    input   pkt_rx_eop;
+    input   pkt_rx_err;
+    input   pkt_rx_mod;
+    input   pkt_rx_sop;
+    input   pkt_rx_val;
+    input   pkt_tx_full;
+    input   wb_ack_o;
+    input   wb_dat_o;
+    input   wb_int_o;
+    input   xgmii_txc;
+    input   xgmii_txd;
+    output  pkt_rx_ren;
+    output  pkt_tx_data;
+    output  pkt_tx_eop;
+    output  pkt_tx_mod;
+    output  pkt_tx_sop;
+    output  pkt_tx_val;
+    output  wb_adr_i;
+    output  wb_cyc_i;
+    output  wb_dat_i;
+    output  wb_stb_i;
+    output  wb_we_i;
+    output  xgmii_rxc;
+    output  xgmii_rxd;
+  endclocking // drv_cb
+  modport driver_port( clocking drv_cb );
+
+  clocking mon_cb @(posedge clk_156m25);
+    default input   #INPUT_SKEW;
+    default output  #OUTPUT_SKEW;
+    input   pkt_rx_avail;
+    input   pkt_rx_data;
+    input   pkt_rx_eop;
+    input   pkt_rx_err;
+    input   pkt_rx_mod;
+    input   pkt_rx_sop;
+    input   pkt_rx_val;
+    input   pkt_tx_full;
+    input   wb_ack_o;
+    input   wb_dat_o;
+    input   wb_int_o;
+    input   xgmii_txc;
+    input   xgmii_txd;
+    output  pkt_rx_ren;
+    input   pkt_tx_data;
+    input   pkt_tx_eop;
+    input   pkt_tx_mod;
+    input   pkt_tx_sop;
+    input   pkt_tx_val;
+    input   wb_adr_i;
+    input   wb_cyc_i;
+    input   wb_dat_i;
+    input   wb_stb_i;
+    input   wb_we_i;
+    input   xgmii_rxc;
+    input   xgmii_rxd;
+  endclocking //mon_cb
+  modport monitor_port( clocking mon_cb );
 
   modport dut_port  (
                         output  pkt_rx_avail,

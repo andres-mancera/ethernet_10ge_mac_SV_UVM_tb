@@ -1,6 +1,7 @@
 `ifndef TESTCLASS__SV
 `define TESTCLASS__SV
 
+`include "reset_sequence.sv"
 `include "packet_sequence.sv"
 `include "env.sv"
 
@@ -21,16 +22,18 @@ class test_base extends uvm_test;
     super.build_phase(phase);
     m_env = env::type_id::create("m_env", this);
     // ==== Assign virtual interface ================================
+    uvm_config_db #(virtual xge_mac_interface)::set(this, "m_env.rst_agent.rst_drv", "drv_vi", xge_test_top.xge_mac_if);
     uvm_config_db #(virtual xge_mac_interface)::set(this, "m_env.pkt_tx_agent.pkt_tx_drv", "drv_vi", xge_test_top.xge_mac_if);
     uvm_config_db #(virtual xge_mac_interface)::set(this, "m_env.pkt_rx_agent.pkt_rx_mon", "mon_vi", xge_test_top.xge_mac_if);
     // ==============================================================
 
     // ==== Run the sequence on the sequencer using uvm_config_db ===
+    uvm_config_db #(uvm_object_wrapper)::set(this, "m_env.rst_agent.rst_seqr.reset_phase", "default_sequence", reset_sequence::get_type() );
     uvm_config_db #(uvm_object_wrapper)::set(this, "m_env.pkt_tx_agent.pkt_tx_seqr.main_phase", "default_sequence", packet_sequence::get_type() );
     // ==============================================================
 
     // ==== Set the number of packets in the sequence ===============
-    uvm_config_db #(int unsigned)::set(this, "m_env.pkt_tx_agent.pkt_tx_seqr.packet_sequence", "num_packets", 1 );
+    uvm_config_db #(int unsigned)::set(this, "m_env.pkt_tx_agent.pkt_tx_seqr.packet_sequence", "num_packets", 10 );
     // ==============================================================
   endfunction : build_phase
 

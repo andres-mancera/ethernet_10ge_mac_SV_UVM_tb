@@ -132,7 +132,6 @@ class packet_rx_monitor extends uvm_monitor #(packet);
   endtask : run_phase
 
 
-  // UVM report
   function void report_phase( uvm_phase phase );
     `uvm_info( get_name( ), $sformatf( "REPORT: Captured %0d packets", m_num_captured ), UVM_LOW )
   endfunction : report_phase

@@ -5,12 +5,13 @@
 `include "wishbone_sequence.sv"
 `include "packet_sequence.sv"
 `include "env.sv"
+`include "virtual_sequencer.sv"
+`include "virtual_sequence.sv"
 
 
 class test_base extends uvm_test;
 
   env               m_env;
-  packet_sequence   m_seq;
 
   `uvm_component_utils( test_base );
 
@@ -31,7 +32,7 @@ class test_base extends uvm_test;
 
     // ==== Run the sequence on the sequencer using uvm_config_db ===
     uvm_config_db #(uvm_object_wrapper)::set(this, "m_env.rst_agent.rst_seqr.reset_phase", "default_sequence", reset_sequence::get_type() );
-    uvm_config_db #(uvm_object_wrapper)::set(this, "m_env.wshbn_agent.wshbn_seqr.configure_phase", "default_sequence", wishbone_sequence::get_type() );
+    uvm_config_db #(uvm_object_wrapper)::set(this, "m_env.wshbn_agent.wshbn_seqr.configure_phase", "default_sequence", wishbone_init_sequence::get_type() );
     uvm_config_db #(uvm_object_wrapper)::set(this, "m_env.pkt_tx_agent.pkt_tx_seqr.main_phase", "default_sequence", packet_sequence::get_type() );
     // ==============================================================
 
@@ -57,7 +58,6 @@ class test_base extends uvm_test;
 
   virtual task run_phase(input uvm_phase phase);
     `uvm_info(get_name(), $sformatf("%m"), UVM_HIGH);
-    m_seq = packet_sequence::type_id::create("m_seq", this);
   endtask : run_phase
 
 
@@ -69,5 +69,43 @@ class test_base extends uvm_test;
   endtask : main_phase
 
 endclass : test_base
+
+
+
+class virtual_sequence_test_base extends test_base;
+
+  virtual_sequencer     v_seqr;
+
+  `uvm_component_utils( virtual_sequence_test_base );
+
+  function new(input string name, input uvm_component parent);
+    super.new(name, parent);
+  endfunction : new
+
+
+  virtual function void build_phase(input uvm_phase phase);
+    super.build_phase(phase);
+    v_seqr = virtual_sequencer::type_id::create("v_seqr", this);
+
+    // Reset and Configure sequences remain untouched ===============
+    uvm_config_db #(uvm_object_wrapper)::set(this, "m_env.rst_agent.rst_seqr.reset_phase", "default_sequence", reset_sequence::get_type());
+    uvm_config_db #(uvm_object_wrapper)::set(this, "m_env.wshbn_agent.wshbn_seqr.configure_phase", "default_sequence", wishbone_init_sequence::get_type());
+    uvm_config_db #(uvm_object_wrapper)::set(this, "m_env.pkt_tx_agent.pkt_tx_seqr.main_phase", "default_sequence", null);
+    // ==============================================================
+
+    // Run the virtual_sequence on the virtual_sequencer ============
+    uvm_config_db #(uvm_object_wrapper)::set(this, "v_seqr.main_phase", "default_sequence", virtual_sequence::get_type() );
+    // ==============================================================
+  endfunction : build_phase
+
+
+  virtual function void connect_phase(input uvm_phase phase);
+    super.connect_phase(phase);
+    v_seqr.seqr_rst     = m_env.rst_agent.rst_seqr;
+    v_seqr.seqr_wshbn   = m_env.wshbn_agent.wshbn_seqr;
+    v_seqr.seqr_tx_pkt  = m_env.pkt_tx_agent.pkt_tx_seqr;
+  endfunction : connect_phase
+
+endclass : virtual_sequence_test_base
 
 `endif  // TESTCLASS__SV

@@ -16,9 +16,9 @@ class wishbone_sequence extends uvm_sequence #(wishbone_item);
 
   virtual task body();
     // Write to the Configuration register and enable transmission of frames
-    `uvm_do_with(req, { wr_addr==8'h00; wr_data==32'h1; } );
+    `uvm_do_with(req, { xtxn_n==WRITE; xtxn_addr==8'h00; xtxn_data==32'h1; } );
     // Write to the Interrupt Mark register and enable all the interrupts
-    `uvm_do_with(req, { wr_addr==8'h10; wr_data==32'hFFFF_FFFF; } );
+    `uvm_do_with(req, { xtxn_n==WRITE; xtxn_addr==8'h10; xtxn_data==32'hFFFF_FFFF; } );
   endtask : body
 
 

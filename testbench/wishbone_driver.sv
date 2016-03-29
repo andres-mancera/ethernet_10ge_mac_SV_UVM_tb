@@ -32,11 +32,11 @@ class wishbone_driver extends uvm_driver #(wishbone_item);
 
     forever begin
       seq_item_port.get_next_item(req);
-      drv_vi.drv_cb.wb_adr_i  <= req.wr_addr;
+      drv_vi.drv_cb.wb_adr_i  <= req.xtxn_addr;
       drv_vi.drv_cb.wb_cyc_i  <= 1'b1;
       drv_vi.drv_cb.wb_stb_i  <= 1'b1;
-      drv_vi.drv_cb.wb_dat_i  <= req.wr_data;
-      drv_vi.drv_cb.wb_we_i   <= 1'b1;
+      drv_vi.drv_cb.wb_dat_i  <= req.xtxn_data;
+      drv_vi.drv_cb.wb_we_i   <= req.xtxn_n;
       repeat (2)
         @(drv_vi.drv_cb);
       drv_vi.drv_cb.wb_adr_i  <= $urandom_range(255,0);

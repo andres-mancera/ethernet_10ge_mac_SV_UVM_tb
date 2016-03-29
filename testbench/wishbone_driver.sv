@@ -44,7 +44,7 @@ class wishbone_driver extends uvm_driver #(wishbone_item);
       drv_vi.drv_cb.wb_stb_i  <= 1'b0;
       drv_vi.drv_cb.wb_dat_i  <= $urandom;
       drv_vi.drv_cb.wb_we_i   <= 1'b0;
-      repeat (2)
+      repeat (20)
         @(drv_vi.drv_cb);
       seq_item_port.item_done();
     end

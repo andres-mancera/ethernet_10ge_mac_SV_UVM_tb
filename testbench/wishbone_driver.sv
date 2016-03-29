@@ -32,6 +32,7 @@ class wishbone_driver extends uvm_driver #(wishbone_item);
 
     forever begin
       seq_item_port.get_next_item(req);
+      `uvm_info( get_name(), $psprintf("Wishbone Transaction: \n%0s", req.sprint()), UVM_HIGH)
       drv_vi.drv_cb.wb_adr_i  <= req.xtxn_addr;
       drv_vi.drv_cb.wb_cyc_i  <= 1'b1;
       drv_vi.drv_cb.wb_stb_i  <= 1'b1;

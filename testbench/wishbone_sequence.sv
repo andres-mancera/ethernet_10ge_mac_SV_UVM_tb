@@ -4,11 +4,11 @@
 `include "wishbone_item.sv"
 
 
-class wishbone_sequence extends uvm_sequence #(wishbone_item);
+class wishbone_init_sequence extends uvm_sequence #(wishbone_item);
 
-  `uvm_object_utils(wishbone_sequence)
+  `uvm_object_utils(wishbone_init_sequence)
 
-  function new(input string name="wishbone_sequence");
+  function new(input string name="wishbone_init_sequence");
     super.new(name);
     `uvm_info( get_name(), $sformatf("Hierarchy: %m"), UVM_HIGH )
   endfunction : new
@@ -33,6 +33,44 @@ class wishbone_sequence extends uvm_sequence #(wishbone_item);
       starting_phase.drop_objection( this );
   endtask : post_start
 
-endclass : wishbone_sequence
+endclass : wishbone_init_sequence
+
+
+
+
+class wishbone_eot_sequence extends uvm_sequence #(wishbone_item);
+
+  `uvm_object_utils(wishbone_eot_sequence)
+
+  function new(input string name="wishbone_eot_sequence");
+    super.new(name);
+    `uvm_info( get_name(), $sformatf("Hierarchy: %m"), UVM_HIGH )
+  endfunction : new
+
+
+  virtual task body();
+    // Read the Configuration register 0
+    `uvm_do_with(req, { xtxn_n==READ; xtxn_addr==8'h00; } );
+    // Read the Interrupt Pending register
+    `uvm_do_with(req, { xtxn_n==READ; xtxn_addr==8'h08; } );
+    // Read the Interrupt Status register
+    `uvm_do_with(req, { xtxn_n==READ; xtxn_addr==8'h0C; } );
+    // Read the Interrupt Mask register
+    `uvm_do_with(req, { xtxn_n==READ; xtxn_addr==8'h10; } );
+  endtask : body
+
+
+  virtual task pre_start();
+    if ( starting_phase != null )
+      starting_phase.raise_objection( this );
+  endtask : pre_start
+
+
+  virtual task post_start();
+    if  ( starting_phase != null )
+      starting_phase.drop_objection( this );
+  endtask : post_start
+
+endclass : wishbone_eot_sequence
 
 `endif  // WISHBONE_SEQUENCE__SV

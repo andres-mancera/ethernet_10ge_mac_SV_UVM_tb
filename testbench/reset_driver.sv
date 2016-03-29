@@ -26,6 +26,7 @@ class reset_driver extends uvm_driver #(reset_item);
     forever begin
       seq_item_port.get_next_item(req);
       `uvm_info( get_name(), $psprintf("Reset Transaction: \n%0s", req.sprint()), UVM_HIGH)
+      @(drv_vi.drv_cb);
       drv_vi.reset_156m25_n   <= req.reset_n;
       drv_vi.reset_xgmii_rx_n <= req.reset_n;
       drv_vi.reset_xgmii_tx_n <= req.reset_n;

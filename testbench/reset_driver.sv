@@ -28,7 +28,7 @@ class reset_driver extends uvm_driver #(reset_item);
       drv_vi.reset_156m25_n   <= req.reset_n;
       drv_vi.reset_xgmii_rx_n <= req.reset_n;
       drv_vi.reset_xgmii_tx_n <= req.reset_n;
-      drv_vi.wb_rst_i         <= req.reset_n;
+      drv_vi.wb_rst_i         <= !req.reset_n;
       repeat (req.cycles)
         @(drv_vi.drv_cb);
       seq_item_port.item_done();

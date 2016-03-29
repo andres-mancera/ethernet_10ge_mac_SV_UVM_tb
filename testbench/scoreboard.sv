@@ -128,15 +128,15 @@ class scoreboard extends uvm_scoreboard;
   endtask : run_phase
 
 
-  virtual function void report_phase ( input uvm_phase phase );
-    super.report_phase( phase );
-    `uvm_info( get_name( ), $sformatf( "REPORT: Packet Matches   =%0d", m_matches ), UVM_LOW )
-    `uvm_info( get_name( ), $sformatf( "REPORT: Packet Mismatches=%0d", m_mismatches), UVM_LOW )
+  virtual function void final_phase ( input uvm_phase phase );
+    super.final_phase( phase );
+    `uvm_info( get_name( ), $sformatf( "FINAL: Packet Matches   =%0d", m_matches ), UVM_LOW )
+    `uvm_info( get_name( ), $sformatf( "FINAL: Packet Mismatches=%0d", m_mismatches), UVM_LOW )
     if ( m_mismatches )
       `uvm_error( get_name(), "********** TEST FAILED **********" )
     else
       `uvm_info ( get_name(), "********** TEST PASSED **********", UVM_NONE )
-  endfunction : report_phase
+  endfunction : final_phase
 
 endclass : scoreboard
 

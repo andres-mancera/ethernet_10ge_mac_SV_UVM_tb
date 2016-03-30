@@ -37,6 +37,7 @@ class env extends uvm_env;
     super.connect_phase( phase );
     pkt_tx_agent.ap_tx_agent.connect( scbd.from_pkt_tx_agent );
     pkt_rx_agent.ap_rx_agent.connect( scbd.from_pkt_rx_agent );
+    wshbn_agent.ap_agent.connect( scbd.from_wshbn_agent );
   endfunction : connect_phase
 
 endclass : env

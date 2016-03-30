@@ -101,6 +101,7 @@ class packet_tx_driver extends uvm_driver #(packet);
           drv_vi.drv_cb.pkt_tx_data <= tx_data;
         end                   // -------------------------------- MOP cycle ----------------
       end
+      ap_tx_drv.write( req );   //FIXME: Don't do this from the driver
       repeat ( req.ipg ) begin
         @(drv_vi.drv_cb);
         drv_vi.drv_cb.pkt_tx_val    <= 1'b0;
@@ -120,7 +121,6 @@ class packet_tx_driver extends uvm_driver #(packet);
         drv_vi.drv_cb.pkt_tx_mod    <= $urandom_range(0,7);
         drv_vi.drv_cb.pkt_tx_data   <= { $urandom, $urandom_range(0,65535) };
       end
-      ap_tx_drv.write( req );   //FIXME: Don't do this from the driver
       seq_item_port.item_done();
     end
   endtask : run_phase

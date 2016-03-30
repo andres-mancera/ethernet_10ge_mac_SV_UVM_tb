@@ -3,7 +3,7 @@ program testcase();
   import uvm_pkg::*;
 
   `include "testclass.sv"
-  `include "../testcases/bringup_packet_test.sv"
+  `include "test_lib.svh"
 
   initial begin
     uvm_top.run_test();

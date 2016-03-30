@@ -1,8 +1,0 @@
-vcs -full64 -R -sverilog -l vcs.log -ntb_opts uvm-1.1 -debug_pp +vcs+vcdpluson \
--override_timescale=1ps/1ps                 \
-+incdir+../rtl/include/                     \
-../rtl/verilog/*.v                          \
-testcase.sv                                 \
-xge_test_top.sv                             \
-xge_mac_interface.sv                        \
-+UVM_TESTNAME=test_base +UVM_VERBOSITY=HIGH

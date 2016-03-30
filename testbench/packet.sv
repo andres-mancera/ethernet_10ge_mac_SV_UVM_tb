@@ -41,19 +41,52 @@ class packet extends uvm_sequence_item;
     super.new();
   endfunction : new
 
-  // FIXME: Decide if adding get/set methods is worth.
-  constraint C_bringup {
-    payload.size()  inside {[45:54]};
-    mac_dst_addr    == 48'hAABB_CCDD_EEFF;
-    mac_src_addr    == 48'h1122_3344_5566;
-    ether_type      == 16'h0800;
-    foreach( payload[j] )
-      {
-        payload[j]  == j+1;
-      }
-    ipg             == 10;
+endclass : packet
+
+
+
+
+class packet_bringup extends packet;
+
+  `uvm_object_utils( packet_bringup )
+
+  constraint C_bringup 
+    {
+      mac_dst_addr      == 48'hAABB_CCDD_EEFF;
+      mac_src_addr      == 48'h1122_3344_5566;
+      ether_type        dist { 16'h0800:=40, 16'h0806:=20, 16'h88DD:=40 };  // IPv4, ARP, IPv6
+      payload.size()    inside {[45:54]};
+      foreach( payload[j] )
+        {
+          payload[j]  == j+1;
+        }
+      ipg             == 10;
   }
 
-endclass : packet
+  function new(input string name="packet_bringup");
+    super.new(name);
+  endfunction : new
+
+endclass : packet_bringup
+
+
+
+
+class packet_oversized extends packet;
+
+  `uvm_object_utils( packet_oversized )
+
+  constraint C_payload_size
+    {
+      payload.size()  inside {[1501:9000]};
+    }
+
+  function new(input string name="packet_oversized");
+    super.new(name);
+  endfunction : new
+
+endclass : packet_oversized
+
+
 
 `endif // PACKET__SV

@@ -43,17 +43,20 @@ class scoreboard extends uvm_scoreboard;
 
 
   virtual function write_from_pkt_tx_agent( packet tx_packet );
+    `uvm_info( get_name(), $psprintf( "Received pkt_tx packet" ), UVM_FULL )
     pkt_tx_agent_q.push_back( tx_packet );
   endfunction : write_from_pkt_tx_agent
 
 
   virtual function write_from_pkt_rx_agent( packet rx_packet );
+    `uvm_info( get_name(), $psprintf( "Received pkt_rx packet" ), UVM_FULL )
     pkt_rx_agent_q.push_back( rx_packet );
     check_packet_event.trigger( );
   endfunction : write_from_pkt_rx_agent
 
 
   virtual function write_from_wshbn_agent( wishbone_item wshbn_xtxn );
+    `uvm_info( get_name(), $psprintf( "Received wishbone transaction" ), UVM_FULL )
     wshbn_read_q.push_back( wshbn_xtxn );
     check_wshbn_event.trigger( );
   endfunction : write_from_wshbn_agent
@@ -119,8 +122,12 @@ class scoreboard extends uvm_scoreboard;
           error++;
       end
 
-      if ( error )  m_mismatches++;
-      else          m_matches++;
+      if ( error )
+        m_mismatches++;
+      else begin
+        m_matches++;
+        `uvm_info( get_name(), $psprintf( "PACKET MATCH" ), UVM_HIGH )
+      end
     end
   endfunction : check_packet_queues
 
@@ -152,16 +159,21 @@ class scoreboard extends uvm_scoreboard;
         `uvm_info( get_name(), $psprintf( "WISHBONE WR XTXN - No checking done" ), UVM_HIGH )
       end
       else if ( xtxn.xtxn_n==wishbone_item::READ ) begin
-        // Make sure there are no interrupts
-        if ( (xtxn.xtxn_addr==8'h08 || xtxn.xtxn_addr==8'h0C) && xtxn.xtxn_data!=32'h0 ) begin
-          `uvm_error( get_name(), $psprintf( "WISHBONE RD XTXN - Error" ) )
-          `uvm_error( get_name(), $psprintf( "RD_ADDR=0x%0x, Exp RD_DATA=0x%0x, Act RD_DATA=0x%0x",
-                    xtxn.xtxn_addr, 32'h0, xtxn.xtxn_data ) )
-          error++;
+        if ( (xtxn.xtxn_addr!=8'h08 && xtxn.xtxn_addr!=8'h0C) ) begin
+          `uvm_info( get_name(), $psprintf( "WISHBONE RD XTXN - No checking done" ), UVM_HIGH )
         end
         else begin
-          `uvm_info( get_name(), $psprintf( "RD_ADDR=0x%0x, Exp RD_DATA=0x%0x, Act RD_DATA=0x%0x",
-                    xtxn.xtxn_addr, 32'h0, xtxn.xtxn_data ), UVM_HIGH )
+          // Make sure there are no interrupts
+          if ( xtxn.xtxn_data!=32'h0 ) begin
+            `uvm_error(get_name(), $psprintf("WISHBONE RD XTXN - Error" ) )
+            `uvm_error(get_name(), $psprintf("RD_ADDR=0x%0x, Exp RD_DATA=0x%0x, Act RD_DATA=0x%0x",
+                                    xtxn.xtxn_addr, 32'h0, xtxn.xtxn_data ) )
+            error++;
+          end
+          else begin
+            `uvm_info(get_name(), $psprintf("RD_ADDR=0x%0x, Exp RD_DATA=0x%0x, Act RD_DATA=0x%0x",
+                                    xtxn.xtxn_addr, 32'h0, xtxn.xtxn_data ), UVM_HIGH )
+          end
         end
       end
       if ( error )  m_dut_errors++;

@@ -103,18 +103,39 @@ class scoreboard extends uvm_scoreboard;
         error++;
       end
       if ( tx_pkt.payload.size() > rx_pkt.payload.size() ) begin
-        `uvm_error( get_name(), $psprintf( "PAYLOAD SIZE MISMATCH!, Exp=%0d, Act=%0d",
+        `uvm_error( get_name(), $psprintf( "PYLD SIZE MISMATCH!, Exp=%0d, Act=%0d - BYTES DROPPED!",
                     tx_pkt.payload.size(), rx_pkt.payload.size() ) )
+        error++;
         compare_payload_bytes( tx_pkt.payload, rx_pkt.payload, rx_pkt.payload.size(), mismatch );
         if ( mismatch )
           error++;
       end
       else if ( tx_pkt.payload.size() < rx_pkt.payload.size() ) begin
-        `uvm_error( get_name(), $psprintf( "PAYLOAD SIZE MISMATCH!, Exp=%0d, Act=%0d",
+        if ( tx_pkt.payload.size() >= 46 ) begin
+          `uvm_error( get_name(), $psprintf( "PYLD SIZE MISMATCH!, Exp=%0d, Act=%0d - BYTES ADDED!",
                     tx_pkt.payload.size(), rx_pkt.payload.size() ) )
-        compare_payload_bytes( tx_pkt.payload, rx_pkt.payload, tx_pkt.payload.size(), mismatch );
-        if ( mismatch )
           error++;
+          compare_payload_bytes( tx_pkt.payload, rx_pkt.payload, tx_pkt.payload.size(), mismatch );
+          if ( mismatch )
+            error++;
+        end
+        else begin
+          // When payload size is less then 46B, the DUT will pad with zeroes
+          compare_payload_bytes( tx_pkt.payload, rx_pkt.payload, tx_pkt.payload.size(), mismatch );
+          if ( mismatch )
+            error++;
+          for ( int i=tx_pkt.payload.size(); i<rx_pkt.payload.size(); i++ ) begin
+            if ( rx_pkt.payload[i] != 8'h0 ) begin
+              `uvm_error( get_name(), $psprintf( "PYLD[%0d] PADDING MISMATCH!, Exp=0x%0x, Act=0x%0x",
+                            i, 8'h0, rx_pkt.payload[i] ) )
+              error++;
+            end
+            else begin
+              `uvm_info( get_name(), $psprintf( "PYLD[%0d] PADDING MATCH!, Exp=0x%0x, Act=0x%0x",
+                            i, 8'h0, rx_pkt.payload[i] ), UVM_FULL )
+            end
+          end
+        end
       end
       else begin
         compare_payload_bytes( tx_pkt.payload, rx_pkt.payload, tx_pkt.payload.size(), mismatch );
@@ -137,12 +158,12 @@ class scoreboard extends uvm_scoreboard;
     mismatch = 0;
     for ( int i=0; i<length; i++ ) begin
       if ( exp_bytes[i] != act_bytes[i] ) begin
-        `uvm_error( get_name(), $psprintf( "PAYLOAD[%0d] MISMATCH!, Exp=0x%0x, Act=0x%0x",
+        `uvm_error( get_name(), $psprintf( "PYLD[%0d] MISMATCH!, Exp=0x%0x, Act=0x%0x",
                     i, exp_bytes[i], act_bytes[i] ) )
         mismatch++;
       end
       else begin
-        `uvm_info( get_name(), $psprintf( "PAYLOAD[%0d] MATCH!, Exp=0x%0x, Act=0x%0x",
+        `uvm_info( get_name(), $psprintf( "PYLD[%0d] MATCH!, Exp=0x%0x, Act=0x%0x",
                     i, exp_bytes[i], act_bytes[i] ), UVM_FULL )
       end
     end

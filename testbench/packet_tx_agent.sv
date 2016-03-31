@@ -1,6 +1,7 @@
 `ifndef PACKET_TX_AGENT__SV
 `define PACKET_TX_AGENT__SV
 
+`include "packet_tx_monitor.sv"
 `include "packet_tx_driver.sv"
 typedef uvm_sequencer #(packet) packet_tx_sequencer;
 
@@ -9,6 +10,7 @@ class packet_tx_agent extends uvm_agent;
 
   packet_tx_sequencer           pkt_tx_seqr;
   packet_tx_driver              pkt_tx_drv;
+  packet_tx_monitor             pkt_tx_mon;
   uvm_analysis_port #(packet)   ap_tx_agent;
 
   `uvm_component_utils( packet_tx_agent )
@@ -22,6 +24,7 @@ class packet_tx_agent extends uvm_agent;
     super.build_phase( phase );
     pkt_tx_seqr = packet_tx_sequencer::type_id::create( "pkt_tx_seqr", this );
     pkt_tx_drv  = packet_tx_driver::type_id::create( "pkt_tx_drv", this );
+    pkt_tx_mon  = packet_tx_monitor::type_id::create( "pkt_tx_mon", this );
     ap_tx_agent = new ( "ap_tx_agent", this );
   endfunction : build_phase
 

@@ -27,6 +27,7 @@ class test_base extends uvm_test;
     uvm_config_db #(virtual xge_mac_interface)::set(this, "m_env.rst_agent.rst_drv", "drv_vi", xge_test_top.xge_mac_if);
     uvm_config_db #(virtual xge_mac_interface)::set(this, "m_env.wshbn_agent.wshbn_mon", "mon_vi", xge_test_top.xge_mac_if);
     uvm_config_db #(virtual xge_mac_interface)::set(this, "m_env.wshbn_agent.wshbn_drv", "drv_vi", xge_test_top.xge_mac_if);
+    uvm_config_db #(virtual xge_mac_interface)::set(this, "m_env.pkt_tx_agent.pkt_tx_mon", "mon_vi", xge_test_top.xge_mac_if);
     uvm_config_db #(virtual xge_mac_interface)::set(this, "m_env.pkt_tx_agent.pkt_tx_drv", "drv_vi", xge_test_top.xge_mac_if);
     uvm_config_db #(virtual xge_mac_interface)::set(this, "m_env.pkt_rx_agent.pkt_rx_mon", "mon_vi", xge_test_top.xge_mac_if);
     // ==============================================================

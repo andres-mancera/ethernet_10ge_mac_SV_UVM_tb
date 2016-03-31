@@ -32,8 +32,8 @@ class packet_tx_driver extends uvm_driver #(packet);
     `uvm_info( get_name(), $sformatf("HIERARCHY: %m"), UVM_HIGH);
     // Initial assignment for pkt_tx interface signals
     drv_vi.drv_cb.pkt_tx_val    <= 1'b0;
-    drv_vi.drv_cb.pkt_tx_sop    <= 1'b0;    //<= $urandom_range(1,0);   FIXME: Random
-    drv_vi.drv_cb.pkt_tx_eop    <= 1'b0;    //<= $urandom_range(1,0);   FIXME: Random
+    drv_vi.drv_cb.pkt_tx_sop    <= $urandom_range(1,0);
+    drv_vi.drv_cb.pkt_tx_eop    <= $urandom_range(1,0);
     drv_vi.drv_cb.pkt_tx_mod    <= $urandom_range(7,0);
     drv_vi.drv_cb.pkt_tx_data   <= { $urandom, $urandom_range(65535,0) };
 
@@ -105,8 +105,8 @@ class packet_tx_driver extends uvm_driver #(packet);
       repeat ( req.ipg ) begin
         @(drv_vi.drv_cb);
         drv_vi.drv_cb.pkt_tx_val    <= 1'b0;
-        drv_vi.drv_cb.pkt_tx_sop    <= 1'b0;    //FIXME: Can be random
-        drv_vi.drv_cb.pkt_tx_eop    <= 1'b0;    //FIXME: Can be random
+        drv_vi.drv_cb.pkt_tx_sop    <= $urandom_range(1,0);
+        drv_vi.drv_cb.pkt_tx_eop    <= $urandom_range(1,0);
         drv_vi.drv_cb.pkt_tx_mod    <= $urandom_range(7,0);
         drv_vi.drv_cb.pkt_tx_data   <= { $urandom, $urandom_range(65535,0) };
       end
@@ -116,10 +116,10 @@ class packet_tx_driver extends uvm_driver #(packet);
         // next packet can begin as soon as this signal is de-asserted.
         @(drv_vi.drv_cb);
         drv_vi.drv_cb.pkt_tx_val    <= 1'b0;
-        drv_vi.drv_cb.pkt_tx_sop    <= 1'b0;    //FIXME: Can be random
-        drv_vi.drv_cb.pkt_tx_eop    <= 1'b0;    //FIXME: Can be random
-        drv_vi.drv_cb.pkt_tx_mod    <= $urandom_range(0,7);
-        drv_vi.drv_cb.pkt_tx_data   <= { $urandom, $urandom_range(0,65535) };
+        drv_vi.drv_cb.pkt_tx_sop    <= $urandom_range(1,0);
+        drv_vi.drv_cb.pkt_tx_eop    <= $urandom_range(1,0);
+        drv_vi.drv_cb.pkt_tx_mod    <= $urandom_range(7,0);
+        drv_vi.drv_cb.pkt_tx_data   <= { $urandom, $urandom_range(65535,0) };
       end
       seq_item_port.item_done();
     end

@@ -2,7 +2,7 @@
 `define PACKET_RX_MONITOR__SV
 
 
-class packet_rx_monitor extends uvm_monitor #(packet);
+class packet_rx_monitor extends uvm_monitor;
 
   virtual xge_mac_interface     mon_vi;
   int unsigned                  m_num_captured;

@@ -2,7 +2,7 @@
 `define WISHBONE_MONITOR__SV
 
 
-class wishbone_monitor extends uvm_monitor #(wishbone_item);
+class wishbone_monitor extends uvm_monitor;
 
   virtual xge_mac_interface             mon_vi;
   int unsigned                          m_num_captured;

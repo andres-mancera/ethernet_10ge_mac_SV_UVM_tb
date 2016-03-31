@@ -78,7 +78,7 @@ class packet_oversized extends packet;
 
   constraint C_payload_size
     {
-      payload.size()  inside {[1501:9000]};
+      payload.size() inside {[1501:9000]};
     }
 
   function new(input string name="packet_oversized");
@@ -98,7 +98,7 @@ class packet_undersized extends packet;
     {
       // When payload size is less then 46B, the DUT is supposed
       // to pad the packet to the minimum 64B required for Ethernet.
-      payload.size()  inside {[1:45]};
+      payload.size() inside {[1:45]};
     }
 
   function new(input string name="packet_undersized");
@@ -107,6 +107,59 @@ class packet_undersized extends packet;
 
 endclass : packet_undersized
 
+
+
+
+class packet_small_large extends packet;
+
+  `uvm_object_utils( packet_small_large )
+
+  constraint C_payload_size
+    {
+      payload.size() dist { [46:50]:/50, [1456:1500]:/50 };
+    }
+
+  function new(input string name="packet_small_large");
+    super.new(name);
+  endfunction : new
+
+endclass : packet_small_large
+
+
+
+
+class packet_small_ipg extends packet;
+
+  `uvm_object_utils( packet_small_ipg )
+
+  constraint C_ipg
+    {
+      ipg inside {[0:10]};
+    }
+
+  function new(input string name="packet_small_ipg");
+    super.new(name);
+  endfunction : new
+
+endclass : packet_small_ipg
+
+
+
+
+class packet_zero_ipg extends packet;
+
+  `uvm_object_utils( packet_zero_ipg )
+
+  constraint C_ipg
+    {
+      ipg == 0;
+    }
+
+  function new(input string name="packet_zero_ipg");
+    super.new(name);
+  endfunction : new
+
+endclass : packet_zero_ipg
 
 
 

@@ -5,7 +5,6 @@
 class packet_tx_driver extends uvm_driver #(packet);
 
   virtual xge_mac_interface     drv_vi;
-  uvm_analysis_port #(packet)   ap_tx_drv;
 
   `uvm_component_utils( packet_tx_driver )
 
@@ -16,7 +15,6 @@ class packet_tx_driver extends uvm_driver #(packet);
 
   virtual function void build_phase(input uvm_phase phase);
     super.build_phase(phase);
-    ap_tx_drv = new ( "ap_tx_drv", this );
     uvm_config_db#(virtual xge_mac_interface)::get(this, "", "drv_vi", drv_vi);
     if ( drv_vi==null )
       `uvm_fatal(get_name(), "Virtual Interface for driver not set!");
@@ -104,7 +102,6 @@ class packet_tx_driver extends uvm_driver #(packet);
             drv_vi.drv_cb.pkt_tx_data <= tx_data;
           end                   // -------------------------------- MOP cycle ----------------
         end
-        ap_tx_drv.write( req );   //FIXME: Don't do this from the driver
         repeat ( req.ipg ) begin
           @(drv_vi.drv_cb);
           drv_vi.drv_cb.pkt_tx_val    <= 1'b0;

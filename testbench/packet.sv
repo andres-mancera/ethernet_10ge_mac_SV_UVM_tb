@@ -54,7 +54,7 @@ class packet_bringup extends packet;
     {
       mac_dst_addr      == 48'hAABB_CCDD_EEFF;
       mac_src_addr      == 48'h1122_3344_5566;
-      ether_type        dist { 16'h0800:=40, 16'h0806:=20, 16'h88DD:=40 };  // IPv4, ARP, IPv6
+      ether_type        dist { 16'h0800:=34, 16'h0806:=33, 16'h88DD:=33 };  // IPv4, ARP, IPv6
       payload.size()    inside {[45:54]};
       foreach( payload[j] )
         {
@@ -86,6 +86,27 @@ class packet_oversized extends packet;
   endfunction : new
 
 endclass : packet_oversized
+
+
+
+
+class packet_undersized extends packet;
+
+  `uvm_object_utils( packet_undersized )
+
+  constraint C_payload_size
+    {
+      // When payload size is less then 46B, the DUT is supposed
+      // to pad the packet to the minimum 64B required for Ethernet.
+      payload.size()  inside {[1:45]};
+    }
+
+  function new(input string name="packet_undersized");
+    super.new(name);
+  endfunction : new
+
+endclass : packet_undersized
+
 
 
 

@@ -12,6 +12,7 @@ class scoreboard extends uvm_scoreboard;
   int unsigned  m_matches;
   int unsigned  m_mismatches;
   int unsigned  m_dut_errors;
+  int unsigned  non_empty_queue;
   uvm_event     check_packet_event;
   uvm_event     check_wshbn_event;
 
@@ -34,6 +35,7 @@ class scoreboard extends uvm_scoreboard;
     m_matches       = 0;
     m_mismatches    = 0;
     m_dut_errors    = 0;
+    non_empty_queue = 0;
     from_pkt_tx_agent   = new ("from_pkt_tx_agent", this);
     from_pkt_rx_agent   = new ("from_pkt_rx_agent", this);
     from_wshbn_agent    = new ("from_wshbn_agent", this );
@@ -211,12 +213,32 @@ class scoreboard extends uvm_scoreboard;
   endtask : run_phase
 
 
+  virtual function void check_phase ( input uvm_phase phase );
+    // Check the scoreboard queues and make sure they are empty
+    if ( pkt_tx_agent_q.size() ) begin
+      `uvm_error( get_name(), $psprintf("pkt_tx_agent_q not empty at end ot test") )
+      `uvm_error( get_name(), $psprintf("pkt_tx_agent_q size = %0d", pkt_tx_agent_q.size() ) )
+      non_empty_queue++;
+    end
+    if ( pkt_rx_agent_q.size() ) begin
+      `uvm_error( get_name(), $psprintf("pkt_rx_agent_q not empty at end ot test") )
+      `uvm_error( get_name(), $psprintf("pkt_rx_agent_q size = %0d", pkt_rx_agent_q.size() ) )
+      non_empty_queue++;
+    end
+    if ( wshbn_read_q.size() ) begin
+      `uvm_error( get_name(), $psprintf("wshbn_read_q not empty at end ot test") )
+      `uvm_error( get_name(), $psprintf("wshbn_read_q size = %0d", wshbn_read_q.size() ) )
+      non_empty_queue++;
+    end
+  endfunction : check_phase
+
+
   virtual function void final_phase ( input uvm_phase phase );
     super.final_phase( phase );
     `uvm_info( get_name( ), $sformatf( "FINAL: Packet Matches   =%0d", m_matches ), UVM_LOW )
     `uvm_info( get_name( ), $sformatf( "FINAL: Packet Mismatches=%0d", m_mismatches), UVM_LOW )
     `uvm_info( get_name( ), $sformatf( "FINAL: Wishbone Errors  =%0d", m_dut_errors), UVM_LOW )
-    if ( m_mismatches || m_dut_errors )
+    if ( m_mismatches || m_dut_errors || non_empty_queue )
       `uvm_error( get_name(), "********** TEST FAILED **********" )
     else
       `uvm_info ( get_name(), "********** TEST PASSED **********", UVM_NONE )

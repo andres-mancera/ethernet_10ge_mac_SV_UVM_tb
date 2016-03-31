@@ -70,14 +70,27 @@ class packet_tx_monitor extends uvm_monitor;
           // -------------------------------- EOP cycle ----------------
           rcv_pkt.eop_mark= mon_vi.mon_cb.pkt_tx_eop;
           pkt_in_progress = 0;
-          if ( mon_vi.mon_cb.pkt_tx_mod==0 ) begin
-            for ( int i=0; i<8; i++ ) begin
-              rx_data_q.push_back( (mon_vi.mon_cb.pkt_tx_data >> (64-8*(i+1))) & 8'hFF );
+          if ( rx_data_q.size()==0 ) begin
+            rcv_pkt.mac_src_addr[31:0]  = mon_vi.mon_cb.pkt_tx_data[63:32];
+            rcv_pkt.ether_type          = mon_vi.mon_cb.pkt_tx_data[31:16];
+            if ( mon_vi.mon_cb.pkt_tx_mod==0 ) begin
+              rx_data_q.push_back(mon_vi.mon_cb.pkt_tx_data[15:8]);
+              rx_data_q.push_back(mon_vi.mon_cb.pkt_tx_data[7:0]);
+            end
+            else if ( mon_vi.mon_cb.pkt_tx_mod==7 ) begin
+              rx_data_q.push_back(mon_vi.mon_cb.pkt_tx_data[15:8]);
             end
           end
           else begin
-            for ( int i=0; i<mon_vi.mon_cb.pkt_tx_mod; i++ ) begin
-              rx_data_q.push_back( (mon_vi.mon_cb.pkt_tx_data >> (64-8*(i+1))) & 8'hFF );
+            if ( mon_vi.mon_cb.pkt_tx_mod==0 ) begin
+              for ( int i=0; i<8; i++ ) begin
+                rx_data_q.push_back( (mon_vi.mon_cb.pkt_tx_data >> (64-8*(i+1))) & 8'hFF );
+              end
+            end
+            else begin
+              for ( int i=0; i<mon_vi.mon_cb.pkt_tx_mod; i++ ) begin
+                rx_data_q.push_back( (mon_vi.mon_cb.pkt_tx_data >> (64-8*(i+1))) & 8'hFF );
+              end
             end
           end
           rcv_pkt.payload = new[rx_data_q.size()];

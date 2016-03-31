@@ -32,7 +32,7 @@ class packet_tx_agent extends uvm_agent;
   virtual function void connect_phase( input uvm_phase phase );
     super.connect_phase( phase );
     pkt_tx_drv.seq_item_port.connect( pkt_tx_seqr.seq_item_export );
-    this.ap_tx_agent = pkt_tx_drv.ap_tx_drv;    //FIXME: Connect to the monitor.
+    this.ap_tx_agent = pkt_tx_mon.ap_tx_mon;
   endfunction : connect_phase
 
 endclass : packet_tx_agent

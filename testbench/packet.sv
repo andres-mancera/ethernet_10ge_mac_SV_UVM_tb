@@ -134,7 +134,7 @@ class packet_small_ipg extends packet;
 
   constraint C_ipg
     {
-      ipg inside {[0:10]};
+      ipg inside {[1:10]};
     }
 
   function new(input string name="packet_small_ipg");

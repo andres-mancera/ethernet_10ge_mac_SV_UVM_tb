@@ -14,7 +14,6 @@ class bringup_packet_test extends virtual_sequence_test_base;
   virtual function void build_phase(input uvm_phase phase);
     super.build_phase(phase);
     `uvm_info(get_name(), $sformatf("Hierarchy: %m"), UVM_NONE )
-    uvm_config_db #(int unsigned)::set(this, "m_env.pkt_tx_agent.pkt_tx_seqr.packet_sequence", "num_packets", 10 );
     factory.set_type_override_by_type(  packet::get_type() ,
                                         packet_bringup::get_type() );
   endfunction : build_phase

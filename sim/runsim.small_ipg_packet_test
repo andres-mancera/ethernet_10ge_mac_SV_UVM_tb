@@ -1,0 +1,9 @@
+vcs -full64 -R -sverilog -l vcs.log -ntb_opts uvm-1.1 -debug_pp +vcs+vcdpluson \
+-override_timescale=1ps/1ps                 \
++incdir+../rtl/include/                     \
+../rtl/verilog/*.v                          \
++incdir+../testbench/                       \
+../testbench/testcase.sv                    \
+../testbench/xge_test_top.sv                \
+../testbench/xge_mac_interface.sv           \
++UVM_TESTNAME=small_ipg_packet_test +UVM_VERBOSITY=HIGH

@@ -1,4 +1,4 @@
-vcs -full64 -R -sverilog -l vcs.log -ntb_opts uvm-1.1 -debug_pp +vcs+vcdpluson \
+vcs -full64 -R -sverilog -l vcs.log -ntb_opts uvm-1.1 -debug_pp +vcs+vcdpluson +ntb_random_seed_automatic   \
 -override_timescale=1ps/1ps                 \
 +incdir+../rtl/include/                     \
 ../rtl/verilog/*.v                          \

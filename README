@@ -1,0 +1,71 @@
+//////////////////////////////////////////////////////////////////////
+//                                                                  //                               
+//  Author    : German Andres Mancera                               //
+//  Project   : SystemVerilog/UVM Testbench for a 10GE MAC Core     //
+//  Course    : System and Functional Verification Using UVM        //
+//              UCSC Silicon Valley Extension                       //
+//  Instructor: Benjamin Ting                                       //
+//                                                                  //
+//////////////////////////////////////////////////////////////////////
+
+=================================
+  EXECUTIVE SUMMARY
+=================================
+This is the source code of a fully-fledged SystemVerilog verification
+environment using the Universal Verification Methodology.  The Design
+Under-Test (DUT) is a 10GE MAC Core whose source code is available under
+the LGPL license from OpenCores.org:
+  http://opencores.org/project,xge_mac
+
+This verification environment was developed as the final project of the 
+"System and Functional Verification Using UVM" course at the UCSC Silicon
+Valley Extension.  For additional information, take a look at the 
+verification document available in the doc/ directory.
+
+
+=================================
+  VERIFICATION PLAN DOCUMENT
+=================================
+The verification plan is available in the doc/ directory.  This document
+describes the whole testbench environment and all its components in detail.
+An appendix that explains the 2 bugs that were found as part of this project
+has been also added to the verification plan.
+
+
+=================================
+  TESTBENCH'S FILE STRUCTURE
+=================================
+Here is a brief description of each one of the directories in this project:
+ * doc/:  PDF verification plan (aka testplan).
+ * rtl/:  Verilog source code for the DUT.
+ * scripts/:  Scripts required to run a regression.
+ * sim/:  runsim files for all testcases with the required VCS flags.
+ * testbench/:  Source code for all the testbench components.
+ * testcases/:  Test case files.
+
+
+=================================
+  HOW TO RUN A TEST/REGRESSION?
+=================================
+Go to the scripts/ directory and type "make".  This will display the Makefile
+usage.  You can choose to run all the test cases at once in a regression-like
+manner as shown below:
+
+ > make regress
+
+You can also run one test case by providing the make target alias that is shown
+in the usage.  For instance, if you want to run the "bringup_packet_test", you
+can use the make script to do so as shown below:
+
+ > make t1
+
+If you choose to run a full regression, a perl script will be invoked by the
+Makefile in order to parse the log files and generate a report that contains
+test cases with a passing/failing/unknown log signature.
+
+Alternatively, if you don't want to use the make script and just want to use 
+the runsim scripts in order to run tests manually, go to the sim/ directory and
+run the scripts that corresponds to the test case that you would like to run.
+For instance, if you want to run the "zero_ipg_packet_test", you can do:
+
+ > ./runsim.zero_ipg_packet_test

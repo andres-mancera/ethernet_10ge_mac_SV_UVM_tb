@@ -18,9 +18,9 @@ module xge_test_top();
   //-----------------------------------------------------------------
   // In order to enable waveform dumping, either uncomment the system
   // call below or use the +vcs+vcdpluson vcs command line option.
-  initial begin
-    $vcdpluson();   //FIXME: This should be done from command line
-  end
+  //initial begin
+  //  $vcdpluson();
+  //end
 
   // Generate free running clocks
   initial begin

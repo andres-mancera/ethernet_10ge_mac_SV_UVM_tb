@@ -15,7 +15,6 @@ interface xge_mac_interface( input bit  clk_156m25,
   logic [7:0]   wb_adr_i, xgmii_rxc, xgmii_txc;
   logic [2:0]   pkt_tx_mod, pkt_rx_mod;
 
-  //FIXME: Check clocking block integration
   parameter INPUT_SKEW  = 1;
   parameter OUTPUT_SKEW = 1;
 

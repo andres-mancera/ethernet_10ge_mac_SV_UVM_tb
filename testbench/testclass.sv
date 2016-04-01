@@ -67,7 +67,7 @@ class test_base extends uvm_test;
     uvm_objection   objection;
     super.main_phase(phase);
     objection = phase.get_objection();
-    objection.set_drain_time(this, 1us);   //FIXME: Fine-tune this number
+    objection.set_drain_time(this, 1us);
   endtask : main_phase
 
 endclass : test_base

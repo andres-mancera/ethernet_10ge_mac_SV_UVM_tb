@@ -6,7 +6,7 @@
 
 class packet_sequence extends uvm_sequence #(packet);
 
-  int unsigned  num_packets = 5;
+  int unsigned  num_packets = 100;
 
   `uvm_object_utils(packet_sequence)
 

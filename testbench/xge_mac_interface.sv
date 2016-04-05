@@ -1,3 +1,16 @@
+//////////////////////////////////////////////////////////////////////
+//                                                                  //
+//  File name : xge_mac_interface.sv                                //
+//  Author    : G. Andres Mancera                                   //
+//  License   : GNU Lesser General Public License                   //
+//  Course    : System and Functional Verification Using UVM        //
+//              UCSC Silicon Valley Extension                       //
+//                                                                  //
+//////////////////////////////////////////////////////////////////////
+`ifndef XGE_MAC_INTERFACE__SV
+`define XGE_MAC_INTERFACE__SV
+
+
 interface xge_mac_interface( input bit  clk_156m25,
                              input bit  clk_xgmii_rx,
                              input bit  clk_xgmii_tx,
@@ -120,3 +133,5 @@ interface xge_mac_interface( input bit  clk_156m25,
   end
 
 endinterface : xge_mac_interface
+
+`endif  // XGE_MAC_INTERFACE__SV

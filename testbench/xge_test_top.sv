@@ -1,3 +1,16 @@
+//////////////////////////////////////////////////////////////////////
+//                                                                  //
+//  File name : xge_test_top.sv                                     //
+//  Author    : G. Andres Mancera                                   //
+//  License   : GNU Lesser General Public License                   //
+//  Course    : System and Functional Verification Using UVM        //
+//              UCSC Silicon Valley Extension                       //
+//                                                                  //
+//////////////////////////////////////////////////////////////////////
+`ifndef XGE_TEST_TOP__SV
+`define XGE_TEST_TOP__SV
+
+
 module xge_test_top();
 
   logic         clk_156m25, clk_xgmii_rx, clk_xgmii_tx;
@@ -90,3 +103,4 @@ module xge_test_top();
 
 endmodule : xge_test_top
 
+`endif  // XGE_TEST_TOP__SV

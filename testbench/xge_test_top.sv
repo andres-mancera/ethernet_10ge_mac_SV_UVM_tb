@@ -24,10 +24,10 @@ module xge_test_top();
 
   // Generate free running clocks
   initial begin
-    clk_156m25      = 1'b0;
-    clk_xgmii_rx    = 1'b0;
-    clk_xgmii_tx    = 1'b0;
-    wb_clk_i        = 1'b0;
+    clk_156m25      <= '0;
+    clk_xgmii_rx    <= '0;
+    clk_xgmii_tx    <= '0;
+    wb_clk_i        <= '0;
     forever begin
       #3200;
       clk_156m25    = ~clk_156m25;

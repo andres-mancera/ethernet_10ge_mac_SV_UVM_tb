@@ -2,6 +2,9 @@
 ##                                                                  //
 ##  File name : Makefile                                            //
 ##  Author    : G. Andres Mancera                                   //
+##  License   : GNU Lesser General Public License                   //
+##  Course    : System and Functional Verification Using UVM        //
+##              UCSC Silicon Valley Extension                       //
 ##                                                                  //
 ##////////////////////////////////////////////////////////////////////
 # Makefile usage

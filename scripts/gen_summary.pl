@@ -3,9 +3,11 @@
 ##                                                                  //
 ##  File name : gen_summary.pl                                      //
 ##  Author    : G. Andres Mancera                                   //
+##  License   : GNU Lesser General Public License                   //
+##  Course    : System and Functional Verification Using UVM        //
+##              UCSC Silicon Valley Extension                       //
 ##                                                                  //
 ##////////////////////////////////////////////////////////////////////
-
 
 my @logfiles = `find ../ -name "*vcs.log"`;
 my $logcount = $#logfiles+1;

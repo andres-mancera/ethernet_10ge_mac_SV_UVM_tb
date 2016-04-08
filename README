@@ -1,10 +1,8 @@
 //////////////////////////////////////////////////////////////////////
 //                                                                  //                               
-//  Author    : German Andres Mancera                               //
+//  Author    : G. Andres Mancera                                   //
 //  Project   : SystemVerilog/UVM Testbench for a 10GE MAC Core     //
-//  Course    : System and Functional Verification Using UVM        //
-//              UCSC Silicon Valley Extension                       //
-//  Instructor: Benjamin Ting                                       //
+//  License   : GNU Lesser General Public License                   //
 //                                                                  //
 //////////////////////////////////////////////////////////////////////
 

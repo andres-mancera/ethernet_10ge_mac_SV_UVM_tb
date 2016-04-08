@@ -1,3 +1,12 @@
+//////////////////////////////////////////////////////////////////////
+//                                                                  //
+//  File name : zero_ipg_packet_test.sv                             //
+//  Author    : G. Andres Mancera                                   //
+//  License   : GNU Lesser General Public License                   //
+//  Course    : System and Functional Verification Using UVM        //
+//              UCSC Silicon Valley Extension                       //
+//                                                                  //
+//////////////////////////////////////////////////////////////////////
 `ifndef ZERO_IPG_PACKET_TEST__SV
 `define ZERO_IPG_PACKET_TEST__SV
 

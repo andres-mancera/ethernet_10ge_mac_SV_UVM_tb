@@ -1,3 +1,12 @@
+//////////////////////////////////////////////////////////////////////
+//                                                                  //
+//  File name : small_large_packet_test.sv                          //
+//  Author    : G. Andres Mancera                                   //
+//  License   : GNU Lesser General Public License                   //
+//  Course    : System and Functional Verification Using UVM        //
+//              UCSC Silicon Valley Extension                       //
+//                                                                  //
+//////////////////////////////////////////////////////////////////////
 `ifndef SMALL_LARGE_PACKET_TEST__SV
 `define SMALL_LARGE_PACKET_TEST__SV
 

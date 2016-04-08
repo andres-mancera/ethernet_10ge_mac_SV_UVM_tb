@@ -1,3 +1,12 @@
+//////////////////////////////////////////////////////////////////////
+//                                                                  //
+//  File name : bringup_packet_test.sv                              //
+//  Author    : G. Andres Mancera                                   //
+//  License   : GNU Lesser General Public License                   //
+//  Course    : System and Functional Verification Using UVM        //
+//              UCSC Silicon Valley Extension                       //
+//                                                                  //
+//////////////////////////////////////////////////////////////////////
 `ifndef BRINGUP_PACKET_TEST__SV
 `define BRINGUP_PACKET_TEST__SV
 

@@ -1,3 +1,12 @@
+//////////////////////////////////////////////////////////////////////
+//                                                                  //
+//  File name : oversized_packet_test.sv                            //
+//  Author    : G. Andres Mancera                                   //
+//  License   : GNU Lesser General Public License                   //
+//  Course    : System and Functional Verification Using UVM        //
+//              UCSC Silicon Valley Extension                       //
+//                                                                  //
+//////////////////////////////////////////////////////////////////////
 `ifndef OVERSIZED_PACKET_TEST__SV
 `define OVERSIZED_PACKET_TEST__SV
 

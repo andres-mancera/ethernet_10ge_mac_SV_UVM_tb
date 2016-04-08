@@ -1,3 +1,12 @@
+//////////////////////////////////////////////////////////////////////
+//                                                                  //
+//  File name : undersized_packet_test.sv                           //
+//  Author    : G. Andres Mancera                                   //
+//  License   : GNU Lesser General Public License                   //
+//  Course    : System and Functional Verification Using UVM        //
+//              UCSC Silicon Valley Extension                       //
+//                                                                  //
+//////////////////////////////////////////////////////////////////////
 `ifndef UNDERSIZED_PACKET_TEST__SV
 `define UNDERSIZED_PACKET_TEST__SV
 

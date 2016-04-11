@@ -59,14 +59,18 @@ class test_base extends uvm_test;
   virtual function void end_of_elaboration_phase(input uvm_phase phase);
     super.end_of_elaboration_phase(phase);
     `uvm_info(get_name(), "Printing Topology from end_of_elaboration phase", UVM_MEDIUM)
-    uvm_top.print_topology();
+    if ( uvm_report_enabled(UVM_MEDIUM) ) begin
+      uvm_top.print_topology();
+    end
   endfunction : end_of_elaboration_phase
 
 
   virtual function void start_of_simulation_phase(input uvm_phase phase);
     super.start_of_simulation_phase(phase);
     `uvm_info(get_name(), "Printing factory from start_of_simulation phase", UVM_MEDIUM);
-    factory.print();
+    if ( uvm_report_enabled(UVM_MEDIUM) ) begin
+      factory.print();
+    end
   endfunction  : start_of_simulation_phase
 
 

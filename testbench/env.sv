@@ -14,6 +14,8 @@
 `include "wishbone_agent.sv"
 `include "packet_tx_agent.sv"
 `include "packet_rx_agent.sv"
+`include "xgmii_tx_agent.sv"
+`include "xgmii_rx_agent.sv"
 `include "scoreboard.sv"
 
 
@@ -23,6 +25,8 @@ class env extends uvm_env;
   wishbone_agent    wshbn_agent;
   packet_tx_agent   pkt_tx_agent;
   packet_rx_agent   pkt_rx_agent;
+  xgmii_tx_agent    xgmii_tx_agt;
+  xgmii_rx_agent    xgmii_rx_agt;
   scoreboard        scbd;
 
   `uvm_component_utils(env)
@@ -34,11 +38,13 @@ class env extends uvm_env;
 
   virtual function void build_phase( input uvm_phase phase );
     super.build_phase( phase );
-    rst_agent    = reset_agent::type_id::create( "rst_agent", this );
-    wshbn_agent  = wishbone_agent::type_id::create( "wshbn_agent", this );
-    pkt_tx_agent = packet_tx_agent::type_id::create( "pkt_tx_agent", this );
-    pkt_rx_agent = packet_rx_agent::type_id::create( "pkt_rx_agent", this );
-    scbd         = scoreboard::type_id::create( "scbd", this );
+    rst_agent      = reset_agent::type_id::create( "rst_agent", this );
+    wshbn_agent    = wishbone_agent::type_id::create( "wshbn_agent", this );
+    pkt_tx_agent   = packet_tx_agent::type_id::create( "pkt_tx_agent", this );
+    pkt_rx_agent   = packet_rx_agent::type_id::create( "pkt_rx_agent", this );
+    xgmii_tx_agt   = xgmii_tx_agent::type_id::create( "xgmii_tx_agt", this );
+    xgmii_rx_agt   = xgmii_rx_agent::type_id::create( "xgmii_rx_agt", this );
+    scbd           = scoreboard::type_id::create( "scbd", this );
   endfunction : build_phase
 
 

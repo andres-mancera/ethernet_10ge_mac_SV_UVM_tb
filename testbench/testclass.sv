@@ -86,6 +86,14 @@ class test_base extends uvm_test;
     objection.set_drain_time(this, 1us);
   endtask : main_phase
 
+
+//  virtual function void report_phase(input uvm_phase phase);
+//    uvm_report_server svr;
+//    svr = uvm_report_server::get_server();
+//    if (svr.get_severity_count(UVM_ERROR))
+//      `uvm_error(get_name(), "***** UVM TEST FAILED *****")
+//  endfunction : report_phase
+
 endclass : test_base
 
 
@@ -123,6 +131,11 @@ class virtual_sequence_test_base extends test_base;
     v_seqr.seqr_wshbn   = m_env.wshbn_agent.wshbn_seqr;
     v_seqr.seqr_tx_pkt  = m_env.pkt_tx_agent.pkt_tx_seqr;
   endfunction : connect_phase
+
+
+//  virtual function void report_phase(input uvm_phase phase);
+//    super.report_phase(phase);
+//  endfunction : report_phase
 
 endclass : virtual_sequence_test_base
 
